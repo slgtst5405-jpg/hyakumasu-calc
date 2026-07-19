@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百マス計算オンライン | 楽しく学ぶ脳トレ・算数トレーニング</title>
+    <meta name="description" content="ブラウザで手軽に遊べる百マス計算（100マス計算）ツール。足し算、引き算、掛け算に対応し、タイムアタック機能、成績グラフ、印刷用プリントの作成も可能。子供から大人まで、脳のトレーニングや計算力向上に最適です。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+JP:wght@400;500;700;900&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-dark">
+    <!-- Decorative background elements -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <header class="app-header">
+        <div class="header-container">
+            <h1 class="app-title"><span class="title-accent">百</span>マス計算<span>オンライン</span></h1>
+            <div class="header-controls">
+                <!-- Theme Toggle -->
+                <div class="theme-selector" role="group" aria-label="テーマの選択">
+                    <button class="theme-btn active" data-theme="dark" title="ダークモード">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    </button>
+                    <button class="theme-btn" data-theme="light" title="ライトモード">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                    </button>
+                    <button class="theme-btn" data-theme="cyber" title="サイバーパンク">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2.5 3.19-2.5 5.5h20c0-2.31-1-4.24-2.5-5.5"/><path d="M12 2v10"/><path d="m16 8-4-4-4 4"/><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <div class="main-grid">
+            <!-- Left Panel: Control / Config & Stats -->
+            <section class="panel-left">
+                <!-- Settings Card -->
+                <div class="glass-card settings-card">
+                    <h2 class="card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                        設定カスタム
+                    </h2>
+                    <form id="settings-form" class="settings-form">
+                        <!-- Operation Mode -->
+                        <div class="form-group">
+                            <label class="form-label">演算の種類</label>
+                            <div class="radio-tile-group">
+                                <label class="radio-tile">
+                                    <input type="radio" name="operation" value="add" checked>
+                                    <div class="tile-content">
+                                        <span class="tile-icon">+</span>
+                                        <span class="tile-label">たし算</span>
+                                    </div>
+                                </label>
+                                <label class="radio-tile">
+                                    <input type="radio" name="operation" value="sub">
+                                    <div class="tile-content">
+                                        <span class="tile-icon">-</span>
+                                        <span class="tile-label">ひき算</span>
+                                    </div>
+                                </label>
+                                <label class="radio-tile">
+                                    <input type="radio" name="operation" value="mul">
+                                    <div class="tile-content">
+                                        <span class="tile-icon">×</span>
+                                        <span class="tile-label">かけ算</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Grid Size -->
+                        <div class="form-group">
+                            <label class="form-label">マスのサイズ</label>
+                            <div class="segmented-control">
+                                <input type="radio" id="size-10" name="gridSize" value="10" checked>
+                                <label for="size-10">10 × 10 (100マス)</label>
+                                <input type="radio" id="size-5" name="gridSize" value="5">
+                                <label for="size-5">5 × 5 (25マス)</label>
+                            </div>
+                        </div>
+
+                        <!-- Number Settings -->
+                        <div class="form-group" id="sub-rules-group" style="display: none;">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="sub-positive-only" checked>
+                                <span class="checkmark"></span>
+                                答えがマイナスにならないようにする
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">数値のレベル</label>
+                            <select id="number-level" class="custom-select">
+                                <option value="easy">かんたん (1〜9)</option>
+                                <option value="normal" selected>ふつう (0〜9、重複あり)</option>
+                                <option value="hard">むずかしい (2桁を含む、0〜19)</option>
+                            </select>
+                        </div>
+
+                        <!-- Keyboard Flow Options -->
+                        <div class="form-group">
+                            <label class="form-label">解答後の移動方向</label>
+                            <select id="cursor-flow" class="custom-select">
+                                <option value="right" selected>右へ進む (行方向)</option>
+                                <option value="down">下へ進む (列方向)</option>
+                                <option value="stay">移動しない</option>
+                            </select>
+                        </div>
+
+                        <!-- Options checkboxes -->
+                        <div class="form-group flex-checkboxes">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="realtime-feedback">
+                                <span class="checkmark"></span>
+                                リアルタイムで正誤判定
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="sound-effects" checked>
+                                <span class="checkmark"></span>
+                                効果音を鳴らす
+                            </label>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="form-actions">
+                            <button type="button" id="btn-generate" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                                新しい問題を作成
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Print Options Card -->
+                <div class="glass-card print-card no-print">
+                    <h2 class="card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/><path d="M6 2h12v4H6z"/></svg>
+                        プリント・印刷
+                    </h2>
+                    <p class="print-description">学校の宿題や自宅学習用に、紙に印刷して解くことができます。</p>
+                    <div class="print-actions">
+                        <button type="button" id="btn-print-blank" class="btn btn-secondary btn-full">
+                            問題用紙を印刷
+                        </button>
+                        <button type="button" id="btn-print-answers" class="btn btn-secondary btn-full">
+                            解答付きで印刷
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Calculation Dashboard and Grid -->
+            <section class="panel-right">
+                <!-- Dashboard / Stats Bar -->
+                <div class="dashboard-bar glass-card">
+                    <!-- Timer Display -->
+                    <div class="dashboard-item timer-box">
+                        <span class="dashboard-label">経過時間</span>
+                        <span id="timer-display" class="timer-digits">00:00.00</span>
+                    </div>
+
+                    <!-- Progress Box -->
+                    <div class="dashboard-item progress-box">
+                        <div class="progress-info">
+                            <span class="dashboard-label">進捗</span>
+                            <span id="progress-text" class="progress-count">0 / 100</span>
+                        </div>
+                        <div class="progress-bar-wrapper">
+                            <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Mistakes Counter -->
+                    <div class="dashboard-item accuracy-box" id="accuracy-container" style="display: none;">
+                        <span class="dashboard-label">ミス数</span>
+                        <span id="mistakes-count" class="stats-count negative">0</span>
+                    </div>
+
+                    <!-- Game Control Buttons -->
+                    <div class="dashboard-controls">
+                        <button id="btn-start" class="btn btn-accent btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            スタート
+                        </button>
+                        <button id="btn-pause" class="btn btn-secondary btn-sm" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>
+                            一時停止
+                        </button>
+                        <button id="btn-check" class="btn btn-primary btn-sm" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                            採点する
+                        </button>
+                        <button id="btn-reset" class="btn btn-secondary btn-sm">
+                            クリア
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Calculation Grid Area -->
+                <div class="grid-container glass-card" id="calculation-grid-container">
+                    <div class="table-scroll-container">
+                        <table class="masu-table" id="masu-table">
+                            <!-- JS will build the grid here -->
+                            <tbody>
+                                <tr>
+                                    <td class="cell-head corner-cell">
+                                        <div class="corner-inner">
+                                            <span class="corner-op" id="grid-op">+</span>
+                                        </div>
+                                    </td>
+                                    <!-- Dynamic header cells -->
+                                </tr>
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Overlay screen for Pause or Start states -->
+                    <div id="grid-overlay" class="grid-overlay">
+                        <div class="overlay-content">
+                            <h3 id="overlay-title">百マス計算を始めましょう！</h3>
+                            <p id="overlay-msg">「スタート」ボタンを押すか、マス目をクリック・タップするとタイマーが始まります。</p>
+                            <button id="btn-overlay-start" class="btn btn-accent btn-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                                挑戦を始める
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keyboard Helper Tip -->
+                <div class="keyboard-tip no-print">
+                    <span>💡 <strong>操作のヒント:</strong> キーボードの <strong>矢印キー（↑↓←→）</strong> または <strong>Enter / Tab</strong> でマスをスピーディに移動できます。入力と同時に自動的に次のマスに移動します。</span>
+                </div>
+            </section>
+        </div>
+
+        <!-- History and Statistics Section -->
+        <section class="section-history glass-card no-print">
+            <div class="history-header">
+                <h2 class="card-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+                    学習の記録と分析
+                </h2>
+                <button type="button" id="btn-clear-history" class="btn btn-secondary btn-xs">記録をリセット</button>
+            </div>
+            
+            <div class="history-content">
+                <div class="history-chart-wrapper">
+                    <h3 class="chart-title">タイムの推移 (秒)</h3>
+                    <div id="chart-container" class="chart-container">
+                        <!-- SVG line chart will be rendered here dynamically -->
+                        <div class="no-history-msg">記録がたまると、ここにタイムの推移グラフが表示されます。</div>
+                    </div>
+                </div>
+                <div class="history-table-wrapper">
+                    <h3 class="chart-title">最近の成績</h3>
+                    <div class="table-scroll-mini">
+                        <table class="history-table" id="history-table">
+                            <thead>
+                                <tr>
+                                    <th>日時</th>
+                                    <th>モード</th>
+                                    <th>タイム</th>
+                                    <th>ミス数</th>
+                                    <th>秒/マス</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-list">
+                                <tr>
+                                    <td colspan="5" class="empty-table-msg">履歴はありません。最初の計算に挑戦してみましょう！</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Canvas for Confetti animation -->
+    <canvas id="confetti-canvas" class="confetti-canvas" pointer-events="none"></canvas>
+
+    <!-- Virtual On-screen Numpad for mobile / tablet devices -->
+    <div id="virtual-numpad" class="virtual-numpad no-print">
+        <div class="numpad-header">
+            <span class="numpad-title">数値入力</span>
+            <button id="btn-close-numpad" class="btn-close-numpad" aria-label="閉じる">&times;</button>
+        </div>
+        <div class="numpad-keys">
+            <button class="numpad-key" data-key="7">7</button>
+            <button class="numpad-key" data-key="8">8</button>
+            <button class="numpad-key" data-key="9">9</button>
+            <button class="numpad-key" data-key="4">4</button>
+            <button class="numpad-key" data-key="5">5</button>
+            <button class="numpad-key" data-key="6">6</button>
+            <button class="numpad-key" data-key="1">1</button>
+            <button class="numpad-key" data-key="2">2</button>
+            <button class="numpad-key" data-key="3">3</button>
+            <button class="numpad-key" data-key="0">0</button>
+            <button class="numpad-key key-wide" data-key="Backspace">⌫ 戻る</button>
+            <button class="numpad-key key-wide key-enter" data-key="Enter">↩ 決定</button>
+        </div>
+    </div>
+
+    <!-- Print Header/Footer (Hidden on Screen, visible on print) -->
+    <div class="print-only print-header-title">
+        <h1 id="print-sheet-title">百マス計算 プリント (足し算)</h1>
+        <div class="print-meta-grid">
+            <div class="print-meta-item">日付: ______年 ___月 ___日</div>
+            <div class="print-meta-item">なまえ: _____________________</div>
+            <div class="print-meta-item">タイム: ____分 ____秒</div>
+            <div class="print-meta-item">点数: ______ / <span class="print-total-cells">100</span> 点</div>
+        </div>
+    </div>
+
+    <footer class="app-footer no-print">
+        <p>&copy; 2026 百マス計算オンライン. All Rights Reserved. 個人利用・学習用途での印刷、利用はすべて無料です。</p>
+    </footer>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
