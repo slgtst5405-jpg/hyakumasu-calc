@@ -651,6 +651,31 @@ body {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
     }
+    
+    /* Mobile Grid Adjustments to prevent auto-zoom and fit screen */
+    .masu-table {
+        min-width: 440px !important;
+        width: 100% !important;
+    }
+    .masu-table td {
+        height: 44px !important;
+    }
+    .corner-cell, .row-header {
+        width: 46px !important;
+        min-width: 46px !important;
+    }
+    .col-header {
+        height: 44px !important;
+    }
+    .masu-input {
+        font-size: 16px !important; /* Explicit 16px to prevent iOS Safari auto-zoom on focus */
+    }
+    .cell-head {
+        font-size: 0.95rem !important;
+    }
+    .show-answer-text {
+        font-size: 0.95rem !important;
+    }
 }
 
 .dashboard-item {
